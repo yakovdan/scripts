@@ -25,5 +25,5 @@ wget https://github.com/Backblaze/B2_Command_Line_Tool/releases/latest/download/
 chmod +x ./b2-linux
 b2-linux account authorize $B2_KEY_ID $B2_APP_KEY
 cd $DATA_DIR
-for i in {0..440}; do b2-linux file download b2://calcium-dataset/stanford-aimi/image$(printf %05d $i).npz image$(printf %05d $i).npz ; done
-for i in {0..440}; do b2-linux file download b2://calcium-dataset/stanford-aimi/label$(printf %05d $i).npz label$(printf %05d $i).npz ; done
+b2-linux file download b2://calcium-dataset/stanford-aimi-archive/binary_dataset.zip binary_dataset.zip
+unzip binary_dataset.zip
