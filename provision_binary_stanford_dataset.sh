@@ -15,7 +15,7 @@ git clone "https://${GH_PAT}@github.com/$GH_USER/planned-rand-crop.git"
 cd /workspace/repos/planned-rand-crop
 pip install --no-deps .
 
-pip install lightning numpy matplotlib scipy pydicom nibabel tqdm einops boto3 botocore wandb tensorboard
+pip install lightning numpy matplotlib scipy pydicom nibabel tqdm einops boto3 botocore wandb tensorboard dotenv
 pip install monai-weekly
 
 wandb login $WANDB_KEY
