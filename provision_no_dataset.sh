@@ -8,7 +8,7 @@ mkdir -p $OUTPUT_DIR
 cd /workspace/repos
 git clone "https://${GH_PAT}@github.com/$GH_USER/Calcium.git"
 cd /workspace/repos/Calcium
-git checkout dev_TrainingForceOneChannelDiceExperiment
+git checkout origin/dev_TrainingGeneralizedDiceRandCrop
 
 cd /workspace/repos
 git clone "https://${GH_PAT}@github.com/$GH_USER/planned-rand-crop.git"

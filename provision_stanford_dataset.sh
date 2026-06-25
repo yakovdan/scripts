@@ -8,7 +8,7 @@ mkdir -p $OUTPUT_DIR
 cd /workspace/repos
 git clone "https://${GH_PAT}@github.com/$GH_USER/Calcium.git"
 cd /workspace/repos/Calcium
-git checkout dev_TrainingGeneralizedDiceRandCrop
+git checkout origin/dev_TrainingGeneralizedDiceRandCrop
 
 cd /workspace/repos
 git clone "https://${GH_PAT}@github.com/$GH_USER/planned-rand-crop.git"
@@ -20,7 +20,7 @@ pip install monai-weekly
 
 wandb login $WANDB_KEY
 
-cd /venv/main/bin
+cd /
 wget https://github.com/Backblaze/B2_Command_Line_Tool/releases/latest/download/b2-linux
 chmod +x ./b2-linux
 b2-linux account authorize $B2_KEY_ID $B2_APP_KEY
