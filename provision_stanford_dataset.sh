@@ -111,7 +111,7 @@ if [ -n "${FINETUNE_WEIGHTS_KEY:-}" ] && [ -n "${FINETUNE_WEIGHTS_FILE:-}" ]; th
   if [ -f "$FINETUNE_WEIGHTS_FILE" ]; then
     echo "$FINETUNE_WEIGHTS_FILE already present, skipping download"
   else
-    retry /b2-linux file download "b2://calcium-dataset/${FINETUNE_WEIGHTS_KEY}" "$FINETUNE_WEIGHTS_FILE"
+    retry /b2-linux file download "b2://calcium-dataset/checkpoints/${FINETUNE_WEIGHTS_KEY}" "$FINETUNE_WEIGHTS_FILE"
   fi
   export FINETUNE_WEIGHTS="$DATA_DIR/$FINETUNE_WEIGHTS_FILE"
   echo "FINETUNE_WEIGHTS=$FINETUNE_WEIGHTS"
