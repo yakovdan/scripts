@@ -10,6 +10,18 @@ set -x
 set -uo pipefail        # note: NOT -e, so a single failure won't silently abort
 echo "=== provisioning started $(date -u) ==="
 
+# --- activate runtime env ----------------------------------------------------
+# Provisioning runs non-interactively, so ~/.bashrc (which puts the conda env on
+# PATH) is never sourced. Prepend the env's bin so pip/python/wandb all resolve
+# to /venv/main instead of base, matching the interactive shell.
+VENV=/venv/main
+if [ -x "$VENV/bin/python" ]; then
+  export PATH="$VENV/bin:$PATH"
+  echo "using $($VENV/bin/python -c 'import sys; print(sys.executable)')"
+else
+  echo "FATAL: expected env at $VENV not found"; exit 1
+fi
+
 # --- helpers -----------------------------------------------------------------
 retry() {
   local n=0 max=5 delay=5
