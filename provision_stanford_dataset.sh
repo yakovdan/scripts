@@ -103,4 +103,26 @@ else
 fi
 retry unzip -o "$DATASET_ZIP" -d "$DATA_DIR"
 
+# --- optional: download finetune weights -------------------------------------
+# Only runs when both FINETUNE_WEIGHTS_KEY and FINETUNE_WEIGHTS_FILE are set;
+# otherwise this section is skipped entirely.
+if [ -n "${FINETUNE_WEIGHTS_KEY:-}" ] && [ -n "${FINETUNE_WEIGHTS_FILE:-}" ]; then
+  cd "$DATA_DIR"
+  if [ -f "$FINETUNE_WEIGHTS_FILE" ]; then
+    echo "$FINETUNE_WEIGHTS_FILE already present, skipping download"
+  else
+    retry /b2-linux file download "b2://calcium-dataset/${FINETUNE_WEIGHTS_KEY}" "$FINETUNE_WEIGHTS_FILE"
+  fi
+  export FINETUNE_WEIGHTS="$DATA_DIR/$FINETUNE_WEIGHTS_FILE"
+  echo "FINETUNE_WEIGHTS=$FINETUNE_WEIGHTS"
+  # persist to the Calcium .env (replace any prior entry to stay idempotent)
+  CALCIUM_ENV=/workspace/repos/Calcium/.env
+  touch "$CALCIUM_ENV"
+  grep -v '^FINETUNE_WEIGHTS=' "$CALCIUM_ENV" > "$CALCIUM_ENV.tmp" || true
+  mv "$CALCIUM_ENV.tmp" "$CALCIUM_ENV"
+  echo "FINETUNE_WEIGHTS=$FINETUNE_WEIGHTS" >> "$CALCIUM_ENV"
+else
+  echo "FINETUNE_WEIGHTS_KEY/FINETUNE_WEIGHTS_FILE not set, skipping weights download"
+fi
+
 echo "=== provisioning finished OK $(date -u) ==="
