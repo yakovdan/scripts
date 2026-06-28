@@ -50,7 +50,7 @@ require_env() {
 # --- sanity: confirm required env vars are present in the onstart context -----
 echo "--- environment ---"
 env | sort
-require_env DATA_DIR OUTPUT_DIR GH_PAT GH_USER WANDB_KEY B2_KEY_ID B2_APP_KEY
+require_env DATA_DIR OUTPUT_DIR GH_PAT GH_USER WANDB_KEY B2_KEY_ID B2_APP_KEY DATASET_KEY DATASET_ZIP
 
 # --- directories -------------------------------------------------------------
 mkdir -p /workspace/repos
@@ -91,5 +91,16 @@ if [ ! -x /b2-linux ]; then
   chmod +x /b2-linux
 fi
 retry /b2-linux account authorize "$B2_KEY_ID" "$B2_APP_KEY"
+
+# --- download & unpack dataset -----------------------------------------------
+# Source key within the calcium-dataset bucket and the local zip name are both
+# env-driven (DATASET_KEY / DATASET_ZIP).
+cd "$DATA_DIR"
+if [ -f "$DATASET_ZIP" ]; then
+  echo "$DATASET_ZIP already present, skipping download"
+else
+  retry /b2-linux file download "b2://calcium-dataset/${DATASET_KEY}" "$DATASET_ZIP"
+fi
+retry unzip -o "$DATASET_ZIP" -d "$DATA_DIR"
 
 echo "=== provisioning finished OK $(date -u) ==="
