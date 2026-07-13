@@ -114,7 +114,7 @@ cd "$DATA_DIR"
 if [ -f calcium_alldoses.zip ]; then
   echo "calcium_alldoses.zip already present, skipping download"
 else
-  retry /b2-linux file download "b2://calcium-dataset/calcium_alldoses.zip" calcium_alldoses.zip
+  retry /b2-linux file download "b2://calcium-dataset/calcium-dataset/calcium_alldoses.zip" calcium_alldoses.zip
 fi
 retry unzip -o calcium_alldoses.zip -d "$CALCIUM_DIR"
 
