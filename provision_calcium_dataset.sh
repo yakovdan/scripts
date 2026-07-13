@@ -65,7 +65,7 @@ if [ -d Calcium/.git ]; then
 else
   retry git clone "https://${GH_PAT}@github.com/$GH_USER/Calcium.git"
 fi
-git -C Calcium checkout origin/dev_TrainingGeneralizedDiceRandCrop
+git -C Calcium checkout --track origin/dev_TrainingBinarySoftDice
 
 # --- clone & install planned-rand-crop ---------------------------------------
 cd /workspace/repos
